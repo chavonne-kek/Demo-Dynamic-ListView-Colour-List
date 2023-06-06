@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     EditText etElement, etIndexElement;
-    Button btnAdd;
+    Button btnAdd,btnRemove,btnUpdate;
     ListView lvColor;
     ArrayList<String> alColors;
     @Override
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         alColors = new ArrayList<String>();
         etElement = findViewById(R.id.editTextColor);
         btnAdd = findViewById(R.id.btnAddColor);
+        btnRemove = findViewById(R.id.btnRemoveColor);
+        btnUpdate = findViewById(R.id.btnUpdateColor);
         lvColor = findViewById(R.id.listViewColor);
         etIndexElement = findViewById(R.id.editTextIndex);
 
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String newColor = etElement.getText().toString();
                 //alColors.add(newColor);
-                int pos = Integer.parseInt(etIndexElement.getText().toString());
+                int pos = Integer.parseInt(etIndexElement.getText().toString()) - 1;
+
                 alColors.add(pos,newColor);
                 aaColor.notifyDataSetChanged();
                 etElement.setText("");
@@ -50,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 String color = alColors.get(position);
 
                 Toast.makeText(MainActivity.this, "Color selected: "+color, Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String color = etElement.getText().toString();
+                alColors.remove(color);
+                aaColor.notifyDataSetChanged();
+                etElement.setText("");
+                etIndexElement.setText("");
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String color = etElement.getText().toString();
+                int pos = Integer.parseInt(etIndexElement.getText().toString()) - 1;
+                alColors.set(pos,color);
+                aaColor.notifyDataSetChanged();
+                etElement.setText("");
+                etIndexElement.setText("");
             }
         });
 
